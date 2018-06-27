@@ -77,11 +77,7 @@
     // set window to screen size
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
-  
-  //Johntest: change the color of the background
 
-  //self.movieView.layer.backgroundColor = [NSColor redColor].CGColor;
-    
     /*
     if (self.movieView.movie != nil) {
     */
