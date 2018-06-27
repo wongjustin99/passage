@@ -111,20 +111,12 @@
         scaledOffsetY = (scaledHeight - screenFrame.size.height) / 2;
         
         // place view within window to crop horiz or vert
-        NSRect movieFrame2 = {
+        NSRect movieFrame = {
             -scaledOffsetX,
             -scaledOffsetY,
             scaledWidth,
             scaledHeight
         };
-  NSRect movieFrame = {
-    400,
-    400,
-    500,
-    500
-  };
-  NSLog(@"x:%f, y:%f, %f, %f", movieFrame.origin.x, movieFrame.origin.y, movieFrame.size.width, movieFrame.size.height);
-        self.movieView.frame = movieFrame;
     /*
     } else {
         self.movieView.frame = frame;
@@ -172,6 +164,8 @@
     */
   
   AVPlayer *player = [AVPlayer playerWithURL:movieURL];
+  //TODO: make sure this actually mutes
+  [player setMuted:true];
   
   // create a player view controller
   
@@ -179,7 +173,7 @@
   AVPlayerLayer * newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
   // THIS BELOW LINE FIXES NOT SHOWING ON DESKTOP !!!!
   [newPlayerLayer setFrame:self.movieView.bounds];
- [self.movieView.layer addSublayer:newPlayerLayer];
+  [self.movieView.layer addSublayer:newPlayerLayer];
 
   [player play];
   //[self resizePlaybackArea];
