@@ -7,12 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <QTKit/QTKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
+
+
+@class AVPlayer, AVPlayerLayer;
 
 @interface PAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSOpenSavePanelDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (weak) IBOutlet QTMovieView *movieView;
+@property (weak) IBOutlet NSView *movieView;
+@property (strong) AVPlayerLayer *playerLayer;
 @property (weak) IBOutlet NSMenu *statusMenu;
 @property NSTimer *frameAdvanceTimer;
 @property NSStatusItem *statusItem;

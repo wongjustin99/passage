@@ -7,6 +7,8 @@
 //
 
 #import "PAppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @implementation PAppDelegate
 
@@ -75,12 +77,19 @@
     // set window to screen size
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
+  
+  //Johntest: change the color of the background
 
+  //self.movieView.layer.backgroundColor = [NSColor redColor].CGColor;
+    
+    /*
     if (self.movieView.movie != nil) {
+    */
         // get underlying movie size
-        NSSize movieSize;
-        [[self.movieView.movie attributeForKey:QTMovieNaturalSizeAttribute] getValue:&movieSize];
-        
+        //NSSize movieSize;
+        //[[self.movieView.movie attributeForKey:QTMovieNaturalSizeAttribute] getValue:&movieSize];
+        NSSize movieSize = NSMakeSize(1024, 768);
+  
         // get screen size
         NSRect screenFrame = self.window.screen.frame;
         
@@ -102,17 +111,25 @@
         scaledOffsetY = (scaledHeight - screenFrame.size.height) / 2;
         
         // place view within window to crop horiz or vert
-        NSRect movieFrame = {
+        NSRect movieFrame2 = {
             -scaledOffsetX,
             -scaledOffsetY,
             scaledWidth,
             scaledHeight
         };
-        NSLog(@"%f, %f, %f, %f", movieFrame.origin.x, movieFrame.origin.y, movieFrame.size.width, movieFrame.size.height);
+  NSRect movieFrame = {
+    400,
+    400,
+    500,
+    500
+  };
+  NSLog(@"x:%f, y:%f, %f, %f", movieFrame.origin.x, movieFrame.origin.y, movieFrame.size.width, movieFrame.size.height);
         self.movieView.frame = movieFrame;
+    /*
     } else {
         self.movieView.frame = frame;
     }
+     */
 }
 
 - (void)hideDockIcon
@@ -147,11 +164,43 @@
 
 - (void)loadMovie:(NSURL *)movieURL
 {
+    /*
     self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
     self.movieView.preservesAspectRatio = YES;
     self.movieView.movie.muted = YES;
     [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
-    [self resizePlaybackArea];
+    */
+  
+  AVPlayer *player = [AVPlayer playerWithURL:movieURL];
+  
+  // create a player view controller
+  NSRect newPlayerLayerFrame = {
+    self.movieView.frame.origin.x,
+    self.movieView.frame.origin.x,
+    self.movieView.frame.size.width,
+    self.movieView.frame.size.height
+  };
+  //[newPlayerLayer setBackgroundColor: [NSColor redColor].CGColor];
+  //[self.movieView.layer setBackgroundColor: [NSColor yellowColor].CGColor];
+
+  //newPlayerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  //newPlayerLayer.hidden = YES;
+  
+  [self.movieView setWantsLayer:YES];
+  AVPlayerLayer * newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+  //[newPlayerLayer setFrame: newPlayerLayerFrame];
+  // THIS BELOW LINE FIXES NOT SHOWING ON DESKTOP !!!!
+  [newPlayerLayer setFrame:self.movieView.bounds];
+ [self.movieView.layer addSublayer:newPlayerLayer];
+  [self.movieView.layer setBackgroundColor: [NSColor yellowColor].CGColor];
+  NSLog(@"6666666666666PLAYER x:%@", CGRectCreateDictionaryRepresentation(newPlayerLayer.frame));
+ //self.playerLayer = newPlayerLayer;
+
+  [player play];
+   NSLog(@"77777777PLAYER x:%@", CGRectCreateDictionaryRepresentation(newPlayerLayer.frame));
+  NSLog(@"x:%f, y:%f, %f, %f", self.movieView.frame.origin.x, self.movieView.frame.origin.y, self.movieView.frame.size.width, self.movieView.frame.size.height);
+
+  //[self resizePlaybackArea];
 }
 
 - (IBAction)selectMovieFile:(id)sender {
@@ -172,6 +221,7 @@
     [NSApp activateIgnoringOtherApps:YES];
 }
 
+/*
 - (QTTime)getCurrentPlaybackTime
 {
     // Get progress through the day
@@ -188,12 +238,14 @@
     startTime.timeValue = startTime.timeValue * dayElapsed;
     return startTime;
 }
+ */
 
 - (void)advanceFrame
 {
     // The implementation inside QT seems to be efficient when seeking to the
     // same frame repeatedly.
-    self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+  
+    //self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
 }
 
 #pragma mark - helpers
