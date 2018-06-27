@@ -174,32 +174,14 @@
   AVPlayer *player = [AVPlayer playerWithURL:movieURL];
   
   // create a player view controller
-  NSRect newPlayerLayerFrame = {
-    self.movieView.frame.origin.x,
-    self.movieView.frame.origin.x,
-    self.movieView.frame.size.width,
-    self.movieView.frame.size.height
-  };
-  //[newPlayerLayer setBackgroundColor: [NSColor redColor].CGColor];
-  //[self.movieView.layer setBackgroundColor: [NSColor yellowColor].CGColor];
-
-  //newPlayerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-  //newPlayerLayer.hidden = YES;
   
   [self.movieView setWantsLayer:YES];
   AVPlayerLayer * newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-  //[newPlayerLayer setFrame: newPlayerLayerFrame];
   // THIS BELOW LINE FIXES NOT SHOWING ON DESKTOP !!!!
   [newPlayerLayer setFrame:self.movieView.bounds];
  [self.movieView.layer addSublayer:newPlayerLayer];
-  [self.movieView.layer setBackgroundColor: [NSColor yellowColor].CGColor];
-  NSLog(@"6666666666666PLAYER x:%@", CGRectCreateDictionaryRepresentation(newPlayerLayer.frame));
- //self.playerLayer = newPlayerLayer;
 
   [player play];
-   NSLog(@"77777777PLAYER x:%@", CGRectCreateDictionaryRepresentation(newPlayerLayer.frame));
-  NSLog(@"x:%f, y:%f, %f, %f", self.movieView.frame.origin.x, self.movieView.frame.origin.y, self.movieView.frame.size.width, self.movieView.frame.size.height);
-
   //[self resizePlaybackArea];
 }
 
