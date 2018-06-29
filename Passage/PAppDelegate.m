@@ -171,8 +171,7 @@
    // no player already
     self.moviePlayer = [AVPlayer playerWithURL:movieURL];
    }
-   
-  //self.moviePlayer = [AVPlayer playerWithURL:movieURL];
+  
   [self.moviePlayer setMuted:true];
   
   // create a player view controller
