@@ -23,6 +23,7 @@
 @property NSStatusItem *statusItem;
 @property NSArray *aboutWindowObjects;
 @property NSWindow *aboutWindow;
+@property AVPlayer *moviePlayer;
 
 - (void)advanceFrame;
 - (IBAction)showAboutDialog:(id)sender;

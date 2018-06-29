@@ -77,14 +77,21 @@
     // set window to screen size
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
-
-    /*
-    if (self.movieView.movie != nil) {
-    */
+  
+    if (self.moviePlayer.rate != 0 && self.moviePlayer.error == nil) {
+        // set playerLayer frame to match movieView
+        [self.playerLayer setFrame:self.movieView.bounds];
+        [self.movieView.layer addSublayer:self.playerLayer];
+      
+      
         // get underlying movie size
-        //NSSize movieSize;
-        //[[self.movieView.movie attributeForKey:QTMovieNaturalSizeAttribute] getValue:&movieSize];
-        NSSize movieSize = NSMakeSize(1024, 768);
+        AVAssetTrack *track = [[self.moviePlayer.currentItem.asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
+        NSSize movieSize;
+        if (track != nil)
+        {
+          movieSize = [track naturalSize];
+          movieSize = CGSizeApplyAffineTransform(movieSize, track.preferredTransform);
+        }
   
         // get screen size
         NSRect screenFrame = self.window.screen.frame;
@@ -113,11 +120,9 @@
             scaledWidth,
             scaledHeight
         };
-    /*
     } else {
         self.movieView.frame = frame;
     }
-     */
 }
 
 - (void)hideDockIcon
@@ -159,20 +164,15 @@
     [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
     */
   
-  AVPlayer *player = [AVPlayer playerWithURL:movieURL];
-  //TODO: make sure this actually mutes
-  [player setMuted:true];
+  self.moviePlayer = [AVPlayer playerWithURL:movieURL];
+  [self.moviePlayer setMuted:true];
   
   // create a player view controller
-  
   [self.movieView setWantsLayer:YES];
-  AVPlayerLayer * newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-  // THIS BELOW LINE FIXES NOT SHOWING ON DESKTOP !!!!
-  [newPlayerLayer setFrame:self.movieView.bounds];
-  [self.movieView.layer addSublayer:newPlayerLayer];
+  self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.moviePlayer];
 
-  [player play];
-  //[self resizePlaybackArea];
+  [self.moviePlayer play];
+  [self resizePlaybackArea];
 }
 
 - (IBAction)selectMovieFile:(id)sender {
