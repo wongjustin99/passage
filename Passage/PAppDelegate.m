@@ -83,7 +83,6 @@
         [self.playerLayer setFrame:self.movieView.bounds];
         [self.movieView.layer addSublayer:self.playerLayer];
       
-      
         // get underlying movie size
         AVAssetTrack *track = [[self.moviePlayer.currentItem.asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
         NSSize movieSize;
@@ -157,14 +156,23 @@
 
 - (void)loadMovie:(NSURL *)movieURL
 {
-    /*
-    self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
-    self.movieView.preservesAspectRatio = YES;
-    self.movieView.movie.muted = YES;
-    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
-    */
+    // self.movieView.preservesAspectRatio = YES;
+    //[self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
   
-  self.moviePlayer = [AVPlayer playerWithURL:movieURL];
+  if (self.moviePlayer.rate>0 && !self.moviePlayer.error)
+  {
+    // already have a player
+    [self.moviePlayer setRate:0.0];
+    AVPlayerItem *moviePlayerItem = [AVPlayerItem playerItemWithURL:movieURL];
+    [self.moviePlayer replaceCurrentItemWithPlayerItem:moviePlayerItem];
+    // dereference old playerLayer or else memory leak
+    self.playerLayer = nil;
+   } else {
+   // no player already
+    self.moviePlayer = [AVPlayer playerWithURL:movieURL];
+   }
+   
+  //self.moviePlayer = [AVPlayer playerWithURL:movieURL];
   [self.moviePlayer setMuted:true];
   
   // create a player view controller

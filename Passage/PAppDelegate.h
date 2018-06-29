@@ -17,7 +17,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *movieView;
-@property (strong) AVPlayerLayer *playerLayer;
+@property AVPlayerLayer *playerLayer;
 @property (weak) IBOutlet NSMenu *statusMenu;
 @property NSTimer *frameAdvanceTimer;
 @property NSStatusItem *statusItem;
