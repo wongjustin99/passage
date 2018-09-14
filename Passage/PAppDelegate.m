@@ -166,7 +166,7 @@
     AVPlayerItem *moviePlayerItem = [AVPlayerItem playerItemWithURL:movieURL];
     [self.moviePlayer replaceCurrentItemWithPlayerItem:moviePlayerItem];
     // dereference old playerLayer or else memory leak
-    self.playerLayer = nil;
+    //self.playerLayer = nil;
    } else {
    // no player already
     self.moviePlayer = [AVPlayer playerWithURL:movieURL];
@@ -176,10 +176,24 @@
   
   // create a player view controller
   [self.movieView setWantsLayer:YES];
+  AVPlayerLayer *newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.moviePlayer];
+  newPlayerLayer.frame = self.movieView.layer.bounds;
+  newPlayerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  [self.movieView.layer addSublayer:newPlayerLayer];
+  self.playerLayer = newPlayerLayer;
   self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.moviePlayer];
 
-  [self.moviePlayer play];
+  //[self.moviePlayer play];
+  int32_t timeScale = self.moviePlayer.currentItem.asset.duration.timescale;
+  // SEEEING - THIS works correctly
+  CMTime targetTime = CMTimeMakeWithSeconds(15.000000, timeScale);
+  [self.moviePlayer seekToTime:targetTime];
+  //[self.moviePlayer setRate:1.f];
+  NSLog(@"%fRATEEE", self.moviePlayer.rate);
+  //[self.moviePlayer setRate:0.0];
+  
   [self resizePlaybackArea];
+  self.movieView.needsDisplay = true;
 }
 
 - (IBAction)selectMovieFile:(id)sender {

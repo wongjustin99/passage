@@ -24,6 +24,7 @@
 		01E489F4175DCA380084216A /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 01E489F3175DCA380084216A /* Notes.rtf */; };
 		10C0F7E720C8EF5C00589A1F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489EF175D91E50084216A /* AVFoundation.framework */; };
 		10C0F7E920CA389600589A1F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C0F7E820CA389600589A1F /* AVKit.framework */; };
+		10DBF53820E5EBE6008C9ED8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		01E489EF175D91E50084216A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		01E489F3175DCA380084216A /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
 		10C0F7E820CA389600589A1F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10DBF53820E5EBE6008C9ED8 /* CoreMedia.framework in Frameworks */,
 				10C0F7E920CA389600589A1F /* AVKit.framework in Frameworks */,
 				10C0F7E720C8EF5C00589A1F /* AVFoundation.framework in Frameworks */,
 				013C945E175C694000522999 /* Cocoa.framework in Frameworks */,
@@ -112,6 +115,7 @@
 		013C945C175C694000522999 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */,
 				10C0F7E820CA389600589A1F /* AVKit.framework */,
 				01E489EF175D91E50084216A /* AVFoundation.framework */,
 				013C945D175C694000522999 /* Cocoa.framework */,
