@@ -186,10 +186,12 @@
   //[self.moviePlayer play];
   int32_t timeScale = self.moviePlayer.currentItem.asset.duration.timescale;
   // SEEEING - THIS works correctly
-  CMTime targetTime = CMTimeMakeWithSeconds(15.000000, timeScale);
+  //CMTime targetTime = CMTimeMakeWithSeconds(15.000000, timeScale);
+  CMTime targetTime = [self getCurrentPlaybackTime];
+    NSLog(@"Starttime;`%lld", targetTime.value);
+  
   [self.moviePlayer seekToTime:targetTime];
   //[self.moviePlayer setRate:1.f];
-  NSLog(@"%fRATEEE", self.moviePlayer.rate);
   //[self.moviePlayer setRate:0.0];
   
   [self resizePlaybackArea];
@@ -214,8 +216,8 @@
     [NSApp activateIgnoringOtherApps:YES];
 }
 
-/*
-- (QTTime)getCurrentPlaybackTime
+
+- (CMTime)getCurrentPlaybackTime
 {
     // Get progress through the day
     NSDate *now = [NSDate date];
@@ -227,11 +229,16 @@
     float dayElapsed = dayElapsedInterval / (24 * 60 * 60);
     
     // Set progress through the movie
-    QTTime startTime = self.movieView.movie.duration;
-    startTime.timeValue = startTime.timeValue * dayElapsed;
+    CMTime startTime = self.moviePlayer.currentItem.asset.duration;
+    NSLog(@"Duration:%lld", startTime.value);
+    NSLog(@"dayElapsed:%lld", dayElapsed);
+    startTime = CMTimeMultiplyByFloat64(startTime, dayElapsed);
+    NSLog(@"%lldstartTIME", startTime.value);
+
+  
     return startTime;
 }
- */
+
 
 - (void)advanceFrame
 {
