@@ -244,8 +244,8 @@
 {
     // The implementation inside QT seems to be efficient when seeking to the
     // same frame repeatedly.
-  
-    //self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+    //TODO: Check that it's okay for AVPlayer as well....
+    [self.moviePlayer seekToTime:[self getCurrentPlaybackTime]];
 }
 
 #pragma mark - helpers
