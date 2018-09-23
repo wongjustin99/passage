@@ -111,6 +111,16 @@
     
     scaledOffsetX = (scaledWidth - screenFrame.size.width) / 2;
     scaledOffsetY = (scaledHeight - screenFrame.size.height) / 2;
+    
+    // place view within window to crop horiz or vert
+    NSRect movieFrame = {
+      -scaledOffsetX,
+      -scaledOffsetY,
+      scaledWidth,
+      scaledHeight
+    };
+    NSLog(@"%f, %f, %f, %f", movieFrame.origin.x, movieFrame.origin.y, movieFrame.size.width, movieFrame.size.height);
+    self.movieView.frame = movieFrame;
   } else {
     self.movieView.frame = frame;
   }
